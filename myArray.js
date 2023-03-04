@@ -43,3 +43,26 @@ for (let i = 1; i <= 5; i++) {
 
   console.log(row);
 }
+
+//LESSON 24 -- MIN & MAX USING DIFFERENT TYPES OF LOOPS
+function findMin(arr) {
+  let min = arr[0];
+  for (let i = 1; i < arr.length; i++) {
+    if (arr[i] < min) {
+      min = arr[i];
+    }
+  }
+  return min;
+}
+
+function findMax(arr) {
+  let max = arr[0];
+  let i = 1;
+  while (i < arr.length) {
+    if (arr[i] > max) {
+      max = arr[i];
+    }
+    i++;
+  }
+  return max;
+}

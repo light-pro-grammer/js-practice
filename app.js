@@ -1,26 +1,61 @@
-const num1 = parseFloat(prompt('Enter first number:'));
-const num2 = parseFloat(prompt('Enter second number:'));
+let num1 = Number(prompt('Введіть перше число:'));
+let num2 = Number(prompt('Введіть друге число:'));
 
-if (isNaN(num1) || isNaN(num2)) {
-  alert('Incorrect data entered!');
-} else {
-  const sum = num1 + num2;
-  const diff = num1 - num2;
-  const prod = num1 * num2;
-
-  if (num2 === 0) {
-    alert('The second number cannot be zero!');
-  } else {
-    let quotient = num1 / num2;
-
-    if (num1 < num2) {
-      let confirmation = confirm('Are you sure you want to proceed with this operation?');
-      if (confirmation) {
-        alert(`Sum: ${sum}\nDifference: ${diff}\nProduct: ${prod}\nQuotient: ${quotient}`);
-      }
-    } else {
-      // Display the results in an alert window
-      alert(`Sum: ${sum}\nDifference: ${diff}\nProduct: ${prod}\nQuotient: ${quotient}`);
-    }
+function validateNumbers(x, y) {
+  if (isNaN(x) || isNaN(y)) {
+    alert('Параметри повинні бути числами');
+    return false;
   }
+  return true;
+}
+
+function add(x, y) {
+  if (validateNumbers(x, y)) {
+    alert(`Сума: ${x + y}`);
+  }
+}
+
+function subtract(x, y) {
+  if (validateNumbers(x, y)) {
+    alert(`Різниця: ${x - y}`);
+  }
+}
+
+function multiply(x, y) {
+  if (validateNumbers(x, y)) {
+    alert(`Добуток: ${x * y}`);
+  }
+}
+
+function divide(x, y) {
+  if (validateNumbers(x, y)) {
+    if (y === 0) {
+      alert('Ділення на нуль неможливе');
+      return;
+    }
+    alert(`Частка: ${x / y}`);
+  }
+}
+
+if (!validateNumbers(num1, num2)) {
+  // Зупини виконання коду, якщо введено невірні дані
+  throw new Error('Введено невірні дані. Параметри повинні бути числами.');
+}
+
+if (num1 < num2) {
+  let confirmation = confirm('Перше введене число менше другого. Ви впевнені, що бажаєте виконати цю операцію?');
+
+  if (confirmation) {
+    add(num1, num2);
+    subtract(num1, num2);
+    multiply(num1, num2);
+    divide(num1, num2);
+  }
+}
+
+if (num1 >= num2) {
+  add(num1, num2);
+  subtract(num1, num2);
+  multiply(num1, num2);
+  divide(num1, num2);
 }
