@@ -3,42 +3,66 @@ let num2 = Number(prompt('Введіть друге число:'));
 
 function validateNumbers(x, y) {
   if (isNaN(x) || isNaN(y)) {
-    alert('Параметри повинні бути числами');
+    displayResult('Параметри повинні бути числами', 'black');
     return false;
   }
   return true;
 }
 
+function displayResult(message, color) {
+  const resultDiv = document.getElementById('results');
+  const p = document.createElement('p');
+  p.textContent = message;
+  p.style.color = color;
+  resultDiv.appendChild(p);
+}
+
+function getColorByValue(value) {
+  const maxIntensity = 200;
+  const intensity = Math.min(Math.max(Math.abs(value) / maxIntensity), 1);
+  let colorValue = Math.floor(255 * (1 - intensity));
+
+  // Ensure colorValue never goes below 50 so that you never get full black when the value is to high
+  colorValue = Math.max(colorValue, 50);
+
+  if (value > 0) {
+    return `rgb(0, ${colorValue}, 0)`;
+  } else if (value < 0) {
+    return `rgb(${colorValue}, 0, 0)`;
+  } else {
+    return 'black';
+  }
+}
+
 function add(x, y) {
   if (validateNumbers(x, y)) {
-    alert(`Сума: ${x + y}`);
+    displayResult(`Сума: ${x + y}`, getColorByValue(x + y));
   }
 }
 
 function subtract(x, y) {
   if (validateNumbers(x, y)) {
-    alert(`Різниця: ${x - y}`);
+    displayResult(`Різниця: ${x - y}`, getColorByValue(x - y));
   }
 }
 
 function multiply(x, y) {
   if (validateNumbers(x, y)) {
-    alert(`Добуток: ${x * y}`);
+    displayResult(`Добуток: ${x * y}`, getColorByValue(x * y));
   }
 }
 
 function divide(x, y) {
   if (validateNumbers(x, y)) {
     if (y === 0) {
-      alert('Ділення на нуль неможливе');
+      displayResult('Ділення на нуль неможливе', 'black');
       return;
     }
-    alert(`Частка: ${x / y}`);
+    displayResult(`Частка: ${x / y}`, getColorByValue(x / y));
   }
 }
 
 if (!validateNumbers(num1, num2)) {
-  // Зупини виконання коду, якщо введено невірні дані
   throw new Error('Введено невірні дані. Параметри повинні бути числами.');
 }
 
